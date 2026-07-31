@@ -4,16 +4,23 @@ Ce dépôt contient le code Terraform utilisé pour créer l’infrastructure Az
 
 ## Architecture
 
-azure-iac-terraform/
-├── .github/
-├── terraform/
-│   ├── main.tf
-│   ├── variables.tf
-│   ├── outputs.tf
-│   ├── providers.tf
-│   └── terraform.tfvars
-├── .gitignore
-└── README.md
+terraform/
+├── data.tf
+├── locals.tf
+├── outputs.tf
+├── providers.tf
+├── variables.tf
+├── versions.tf
+├── terraform.tfvars
+├── terraform.tfvars.example
+├── .terraform.lock.hcl
+│
+├── storage.tf
+├── key-vault.tf
+├── postgresql.tf
+├── backend.tf
+├── frontend.tf
+└── redis.tf
 
 
 L’infrastructure comprend :

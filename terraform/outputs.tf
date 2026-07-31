@@ -52,3 +52,24 @@ output "frontend_app_url" {
   description = "URL publique de la Static Web App frontend"
   value       = "https://${azurerm_static_web_app.frontend.default_host_name}"
 }
+
+output "redis_name" {
+  description = "Nom de l'instance Azure Managed Redis"
+  value       = azurerm_managed_redis.redis.name
+}
+
+output "redis_hostname" {
+  description = "Nom DNS de l'instance Azure Managed Redis"
+  value       = azurerm_managed_redis.redis.hostname
+}
+
+output "redis_port" {
+  description = "Port TLS de la base Redis"
+  value       = azurerm_managed_redis.redis.default_database[0].port
+}
+
+output "redis_primary_access_key" {
+  description = "Clé primaire de connexion à Redis"
+  value       = azurerm_managed_redis.redis.default_database[0].primary_access_key
+  sensitive   = true
+}
