@@ -46,7 +46,7 @@ L’infrastructure comprend :
 | Backend App Service | `app-abenslimane-quiz` |
 | Frontend Static Web App | `swa-abenslimane-quiz` |
 
-## Régions
+## Régions/
 
 La majorité des ressources sont déployées dans :
 
