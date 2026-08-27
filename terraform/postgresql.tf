@@ -38,3 +38,23 @@ resource "azurerm_postgresql_flexible_server_database" "quiz" {
   charset   = "UTF8"
   collation = "en_US.utf8"
 }
+
+locals {
+  postgresql_appservice_ips = {
+    appservice-1 = "40.89.130.0"
+    appservice-2 = "40.89.139.181"
+    appservice-3 = "40.89.166.179"
+    appservice-4 = "40.89.161.203"
+    appservice-5 = "40.79.130.129"
+    appservice-6 = "20.111.0.255"
+  }
+}
+
+resource "azurerm_postgresql_flexible_server_firewall_rule" "appservice" {
+  for_each = local.postgresql_appservice_ips
+
+  name             = each.key
+  server_id        = azurerm_postgresql_flexible_server.main.id
+  start_ip_address = each.value
+  end_ip_address   = each.value
+}
