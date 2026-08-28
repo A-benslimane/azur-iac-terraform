@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      TF_VAR_owner: "abenslimane"
+      TF_VAR_owner: "abdel-benslimane"
       TF_VAR_location: "francecentral"
       TF_VAR_resource_group_name: "abenslimaneRG"
 
