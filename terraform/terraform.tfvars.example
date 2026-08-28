@@ -1,0 +1,20 @@
+owner        = "abdel-benslimane"
+project_name = "azure-quiz"
+environment  = "nonprod"
+
+location            = "francecentral"
+resource_group_name = "abenslimaneRG"
+
+app_service_plan_name           = "plan-npr-prf2026"
+app_service_plan_resource_group = "rg-shared-prf2026"
+
+key_vault_name = "kv-abenslimane-quiz"
+
+postgresql_server_name    = "psql-votrenom-quiz"
+postgresql_database_name  = "quizdb"
+postgresql_admin_username = "quizadmin"
+postgresql_sku_name       = "B_Standard_B1ms"
+
+backend_app_name = "app-votrenom-quiz"
+
+frontend_app_name = "swa-abenslimane-quiz"
