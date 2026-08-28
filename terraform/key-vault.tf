@@ -49,3 +49,18 @@ resource "azurerm_role_assignment" "backend_key_vault_secrets_user" {
   role_definition_name = "Key Vault Secrets User"
   principal_id         = "1426bd38-0a9c-4872-9b79-ca7014f1ec2b"
 }
+
+resource "random_password" "backend_api_key" {
+  length  = 48
+  special = false
+}
+
+resource "azurerm_key_vault_secret" "backend_api_key" {
+  name         = "backend-api-key"
+  value        = random_password.backend_api_key.result
+  key_vault_id = azurerm_key_vault.main.id
+
+  depends_on = [
+    azurerm_role_assignment.current_user_key_vault_secrets_officer
+  ]
+}

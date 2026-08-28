@@ -6,6 +6,14 @@ resource "azurerm_static_web_app" "frontend" {
   sku_tier = "Free"
   sku_size = "Free"
 
+
+  lifecycle {
+    ignore_changes = [
+      repository_url,
+      repository_branch
+    ]
+  }
+
   tags = merge(
     local.common_tags,
     {

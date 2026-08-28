@@ -37,6 +37,9 @@ resource "azurerm_linux_web_app" "backend" {
     REDIS_PORT        = tostring(azurerm_managed_redis.redis.default_database[0].port)
     REDIS_PASSWORD    = azurerm_managed_redis.redis.default_database[0].primary_access_key
     REDIS_SSL_ENABLED = "true"
+
+    BACKEND_API_KEY      = "@Microsoft.KeyVault(SecretUri=${azurerm_key_vault_secret.backend_api_key.id})"
+    CORS_ALLOWED_ORIGINS = "https://${azurerm_static_web_app.frontend.default_host_name}"
   }
 
   tags = merge(
