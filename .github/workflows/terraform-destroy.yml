@@ -1,0 +1,68 @@
+name: Terraform Destroy
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: 'Tape DESTROY pour confirmer'
+        required: true
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  destroy:
+    if: github.event.inputs.confirmation == 'DESTROY'
+    runs-on: ubuntu-latest
+
+    env:
+      TF_VAR_owner: "abdel-benslimane"
+      TF_VAR_location: "francecentral"
+      TF_VAR_resource_group_name: "abenslimaneRG"
+
+      TF_VAR_app_service_plan_name: "plan-npr-prf2026"
+      TF_VAR_app_service_plan_resource_group: "rg-shared-prf2026"
+
+      TF_VAR_storage_account_name: "stabenslimanequiz"
+      TF_VAR_key_vault_name: "kv-abenslimane-quiz"
+      TF_VAR_postgresql_server_name: "psql-abenslimane-quiz"
+
+      TF_VAR_backend_app_name: "app-abenslimane-quiz"
+      TF_VAR_frontend_app_name: "swa-abenslimane-quiz"
+
+    defaults:
+      run:
+        working-directory: terraform
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Installer Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.15.7
+
+      - name: Connexion Azure OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Terraform init
+        run: |
+          terraform init \
+            -backend-config="resource_group_name=abenslimaneRG" \
+            -backend-config="storage_account_name=stabenslimanequiz" \
+            -backend-config="container_name=tfstate" \
+            -backend-config="key=terraform.tfstate" \
+            -backend-config="use_oidc=true" \
+            -backend-config="use_azuread_auth=true"
+
+      - name: Terraform destroy plan
+        run: terraform plan -destroy -input=false
+
+      - name: Terraform destroy
+        run: terraform destroy -auto-approve -input=false
