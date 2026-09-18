@@ -47,7 +47,7 @@ resource "azurerm_key_vault_secret" "postgresql_admin_username" {
 resource "azurerm_role_assignment" "backend_key_vault_secrets_user" {
   scope                = azurerm_key_vault.main.id
   role_definition_name = "Key Vault Secrets User"
-  principal_id         = "1426bd38-0a9c-4872-9b79-ca7014f1ec2b"
+  principal_id         = azurerm_linux_web_app.backend.identity[0].principal_id
 }
 
 resource "random_password" "backend_api_key" {
